@@ -1,6 +1,10 @@
 # Exploratory Data Analysis - Project 2
 # This script reproduces Plot1
 #
+# Have total emissions from PM2.5 decreased in the United States from 1999 to
+# 2008? Using the base plotting system, make a plot showing the total PM2.5
+# emission from all sources for each of the years 1999, 2002, 2005, and 2008.
+#
 # Synopsis
 #
 # - Load and prepare the working data (helper function getData())
@@ -24,17 +28,24 @@ plotFile <- "plot1.png"
 files <- getData(sourceUrl, sourceFile, target)
 
 NEI <- files[[1]]
-SCC <- files[[2]]
-
+emissions_by_year <- NEI %>%
+                     group_by(year) %>%
+                     summarize(pm25sum = sum(Emissions) / 10^3) # kilotons
 #
 # Generate the plot and save it as a png file in the working directory
 #
 
 png(filename = plotFile) # height/width defaults are 480px
 
-hist(consumption$Global_active_power,
-     main = 'Global Active Power',
-     xlab = 'Global Active Power (kilowatts)',
-     col = 'red')
+par(mfrow=c(1,1), mar = c(4,5,2,0))
+barplot(data = emissions_by_year,
+        pm25sum ~ year,
+        cex.axis = 0.8,
+        cex.names = 0.8,
+        col = c(2:5),
+        main = "Total pm2.5 Emissions by Year",
+        xlab = "Year",
+        ylab = "Total emissions (Kilotons)",
+        las = 1)
 
 dev.off()
