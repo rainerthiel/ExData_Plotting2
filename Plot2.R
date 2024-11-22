@@ -1,9 +1,9 @@
 # Exploratory Data Analysis - Project 2
-# This script reproduces Plot1
+# This script reproduces Plot2
 #
-# Have total emissions from PM2.5 decreased in the United States from 1999 to
-# 2008? Using the base plotting system, make a plot showing the total PM2.5
-# emission from all sources for each of the years 1999, 2002, 2005, and 2008.
+# Have total emissions from PM2.5 decreased in the Baltimore City, Maryland
+# (fips == "24510") from 1999 to 2008? Use the base plotting system to make a
+# plot answering this question.
 #
 # Synopsis
 #
@@ -23,14 +23,15 @@ source("Helpers.R")
 sourceUrl <- "https://d396qusza40orc.cloudfront.net"
 sourceFile <- "exdata%2Fdata%2FNEI_data.zip"
 target <- "data.zip"
-plotFile <- "plot1.png"
+plotFile <- "plot2.png"
 
 files <- getData(sourceUrl, sourceFile, target)
 
 NEI <- files[[1]]
-emissions_by_year <- NEI %>%
-                     group_by(year) %>%
-                     summarize(pm25sum = sum(Emissions) / 10^3) # kilotons
+
+emissions_by_year <- filter(NEI, fips == "24510") %>%
+    group_by(year) %>%
+    summarize(pm25sum = sum(Emissions) / 10^3) # kilotons
 #
 # Generate the plot and save it as a png file in the working directory
 #
@@ -43,7 +44,7 @@ barplot(data = emissions_by_year,
         cex.axis = 0.8,
         cex.names = 0.8,
         col = c(2:5),
-        main = "Total US pm2.5 Emissions by Year",
+        main = "Total Baltimore pm2.5 Emissions by Year",
         xlab = "Year",
         ylab = "Total emissions (Kilotons)",
         las = 1)
