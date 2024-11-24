@@ -34,7 +34,9 @@ emissions_by_year <- NEI %>%
 # Generate the plot and save it as a png file in the working directory
 #
 
-png(filename = plotFile) # height/width defaults are 480px
+png(filename = plotFile,
+    height = 960, width = 960,
+    res = 144)
 
 par(mfrow=c(1,1), mar = c(6,6,4,4))
 barplot(data = emissions_by_year,
@@ -46,6 +48,6 @@ barplot(data = emissions_by_year,
         xlab = "Year",
         ylab = "Total emissions (Kilotons)",
         las = 1)
-text(x = 4.3, y = 7000, cex = 0.8, wrap_strings("Emissions have decreased over the measurement period", 20))
+text(x = 4.3, y = 7000, cex = 0.8, str_wrap("Emissions have decreased over the measurement period", 20))
 
 dev.off()

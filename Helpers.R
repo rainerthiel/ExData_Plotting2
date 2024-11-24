@@ -4,7 +4,7 @@
 #   Retrieve the data from source into the working direcory
 #   Prepare the data for processing
 #
-# o wrap_strings()
+# o str_wrap()
 #   Wrap text data added to the plots into a neat paragraph
 #
 
@@ -38,10 +38,10 @@ getData <- function(sourceUrl, sourceFile, target) {
     return(list(NEI, SCC))
 }
 #
-# wrap_strings()
+# str_wrap()
 # - https://stackoverflow.com/questions/7367138/text-wrap-for-plot-titles
 #
-wrap_strings  <- function(vector_of_strings, width) {
+str_wrap  <- function(vector_of_strings, width) {
     as.character(sapply(
         vector_of_strings,
         FUN = function(x) {

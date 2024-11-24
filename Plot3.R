@@ -31,14 +31,16 @@ files <- getData(sourceUrl, sourceFile, target)
 
 NEI <- files[[1]]
 
-emissions_by_year <- NEI %>%
+emissions_by_year <- filter(NEI, fips == "24510") %>%
     group_by(year, type) %>%
-    summarize(pm25sum = sum(Emissions) / 10^3) # kilotons
+    summarize(pm25sum = sum(Emissions)) # tons
 #
 # Generate the plot and save it as a png file in the working directory
 #
 
-png(filename = plotFile) # height/width defaults are 480px
+png(filename = plotFile,
+    height = 960, width = 1440,
+    res = 144)
 
 par(mfrow=c(1,1), mar = c(6,6,4,4))
 
@@ -47,12 +49,14 @@ p <- ggplot(data = emissions_by_year,
             group = type,
             colour = type))
 p + 
-    geom_line() +
-    ggtitle("pm2.5 Emissions by Year", "Totals by source type") +
-    xlab("Year") + ylab("Total emissions (Kilotons)") +
-    annotate("text", x = 2007, y = 5000, size = 2,
-             label = wrap_strings(width = 24,
-                                  "All emission types show a decrease over the measurement period"))
+    geom_line(linewidth = 1) +
+    ggtitle("Total Baltimore pm2.5 Emissions by Year", "Totals by source type") +
+    theme(plot.title = element_text(hjust = 0.5), # center
+          plot.subtitle = element_text(hjust = 0.5)) + # center
+    xlab("Year") + ylab("Total emissions (Tons)") +
+    annotate("text", x = 2005, y = 2000, size = 3, hjust = 0,
+             label = str_wrap(width = 30,
+                                  "'Point' emission type shows an increase over the measurement period"))
 
 
 dev.off()
