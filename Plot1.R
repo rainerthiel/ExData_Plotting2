@@ -13,7 +13,6 @@
 
 library(dplyr)
 library(data.table)
-library(lubridate)
 source("Helpers.R")
 
 #
@@ -37,7 +36,7 @@ emissions_by_year <- NEI %>%
 
 png(filename = plotFile) # height/width defaults are 480px
 
-par(mfrow=c(1,1), mar = c(4,5,2,0))
+par(mfrow=c(1,1), mar = c(6,6,4,4))
 barplot(data = emissions_by_year,
         pm25sum ~ year,
         cex.axis = 0.8,
@@ -47,6 +46,6 @@ barplot(data = emissions_by_year,
         xlab = "Year",
         ylab = "Total emissions (Kilotons)",
         las = 1)
-text(x = 4.3, y = 3, cex = 0.8, wrap_strings("Emissions have decreased over the measurement period", 20))
+text(x = 4.3, y = 7000, cex = 0.8, wrap_strings("Emissions have decreased over the measurement period", 20))
 
 dev.off()

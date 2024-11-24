@@ -13,7 +13,6 @@
 
 library(dplyr)
 library(data.table)
-library(lubridate)
 source("Helpers.R")
 
 #
@@ -38,7 +37,7 @@ emissions_by_year <- filter(NEI, fips == "24510") %>%
 
 png(filename = plotFile) # height/width defaults are 480px
 
-par(mfrow=c(1,1), mar = c(4,5,2,0))
+par(mfrow=c(1,1), mar = c(6,6,4,4))
 barplot(data = emissions_by_year,
         pm25sum ~ year,
         cex.axis = 0.8,
