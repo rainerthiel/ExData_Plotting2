@@ -41,7 +41,7 @@ emissions_by_year <- inner_join(x = filter(NEI,
                                 y = SCC,
                                 join_by(SCC)) %>%
     group_by(year, EI.Sector) %>%
-    summarize(pm25sum = sum(Emissions) / 10^3) # kilotons
+    summarize(pm25sum = sum(Emissions)) # tons
 #
 # Generate the plot and save it as a png file in the working directory
 #
@@ -65,7 +65,6 @@ p +
          subtitle = "Motor vehicle related sources",
          caption = str_wrap("All emissions have decreased over the measurement period",
                             width = 48)) +
-    scale_y_continuous(breaks = seq(0, 600, by = 100)) +
-    xlab("Year") + ylab("Total emissions (Kilotons)")
+    xlab("Year") + ylab("Total emissions (Tons)")
 
 dev.off()
